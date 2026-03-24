@@ -1,3 +1,6 @@
 [submodule "core-api"]
 	path = core-api
 	url = https://github.com/raprap111111111111/ipam-core-api.git
+[submodule "dashboard"]
+	path = dashboard
+	url = https://github.com/raprap111111111111/ipam-dashboard.git
