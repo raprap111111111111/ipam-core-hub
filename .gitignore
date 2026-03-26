@@ -1,0 +1,6 @@
+core-api/venv/
+core-api/.env
+dashboard/node_modules/
+dashboard/.env
+.DS_Store
+db.sqlite3
