@@ -1,0 +1,38 @@
+services:
+  web:
+    build: .
+    container_name: hris_web
+    command: >
+      sh -c "
+      until nc -z db 5432;
+      do
+        echo 'Waiting for PostgreSQL...';
+        sleep 2;
+      done;
+      python manage.py migrate &&
+      python manage.py runserver 0.0.0.0:8000
+      "
+    volumes:
+      - .:/app
+    ports:
+      - "8001:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+  db:
+    image: postgres:15
+    container_name: hris_db
+    restart: always
+    environment:
+      POSTGRES_DB: hris_db
+      POSTGRES_USER: hris_user
+      POSTGRES_PASSWORD: hris_password
+    ports:
+      - "5433:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
