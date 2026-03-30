@@ -36,7 +36,7 @@ class Employee(models.Model):
     employee_id = models.CharField(max_length=50, unique=True)
     first_name = models.CharField(max_length=150)
     last_name = models.CharField(max_length=150)
-    middle_name = models.CharField(max_length=150, blank=True, null=True)
+    middle_name = models.CharField(max_length=100, blank=True, null=True)
     email = models.EmailField(blank=True, null=True)
     is_active = models.BooleanField(default=True)
     hired_at = models.DateField(blank=True, null=True)

@@ -80,8 +80,8 @@ DATABASES = {
         'NAME': os.getenv('DB_NAME', 'hris_db'),
         'USER': os.getenv('DB_USER', 'hris_user'),
         'PASSWORD': os.getenv('DB_PASSWORD', 'hris_password'),
-        'HOST': os.getenv('DB_HOST', 'db'),
-        'PORT': os.getenv('DB_PORT', '5432'),
+        'HOST': os.getenv('DB_HOST', '127.0.0.1'),
+        'PORT': os.getenv('DB_PORT', '5433'),
     }
 }
 
@@ -164,4 +164,5 @@ SIMPLE_JWT = {
 
 AUTHENTICATION_BACKENDS = [
     'accounts.backends.EmailBackend',
+    'django.contrib.auth.backends.ModelBackend',
 ]
