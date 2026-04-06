@@ -36,6 +36,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'drf_spectacular',
+    'django_filters',
+
+
+
     'accounts',
     'companies',
     'employees',
@@ -132,7 +136,15 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
         'rest_framework.permissions.IsAuthenticated',
     ),
-    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema', # <--- MAKE SURE THIS COMMA IS HERE
+    
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 10, 
+    'DEFAULT_FILTER_BACKENDS': (
+        'django_filters.rest_framework.DjangoFilterBackend',
+        'rest_framework.filters.SearchFilter',
+        'rest_framework.filters.OrderingFilter',
+    ), # <--- AND THIS COMMA
 }
 
 SPECTACULAR_SETTINGS = {
@@ -166,3 +178,4 @@ AUTHENTICATION_BACKENDS = [
     'accounts.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
