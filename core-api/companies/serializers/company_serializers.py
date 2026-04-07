@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Company, Branch, Department, Designation, Shift
+from companies.models import Company, Department, Branch, Designation, Shift
 
 class CompanySerializer(serializers.ModelSerializer):
     class Meta:

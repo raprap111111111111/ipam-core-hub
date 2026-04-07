@@ -5,7 +5,10 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
-from .serializers import (
+
+from ..permissions import IsAdminUser, IsAccountOwner
+
+from ..serializers import (
     LoginSerializer, LogoutSerializer, 
     ChangePasswordSerializer, UserMeSerializer
 )
@@ -122,3 +125,16 @@ class AssignRoleView(APIView):
             return Response({"error": "User not found"}, status=status.HTTP_404_NOT_FOUND)
         except Group.DoesNotExist:
             return Response({"error": "Role ID does not exist"}, status=status.HTTP_404_NOT_FOUND)
+
+# Add this to the bottom of accounts/views/user_views.py
+class UserDetailView(APIView):
+    permission_classes = [IsAuthenticated, IsAccountOwner]
+    def get(self, request):
+        serializer = UserMeSerializer(request.user)
+        return Response(serializer.data)
+
+class UserRegistrationView(APIView):
+    permission_classes = []
+    def post(self, request):
+        # Your registration logic here
+        return Response({"message": "User registered"}, status=status.HTTP_201_CREATED)

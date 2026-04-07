@@ -4,14 +4,16 @@ from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
 
+from ..permissions import IsCompanyAdmin, BelongsToCompany
+
 from utils.api_helpers import apply_filters_and_paginate
-from .serializers import (
+from companies.serializers import ( 
     CompanySerializer, 
     DepartmentSerializer, 
     BranchSerializer, 
     DesignationSerializer
 )
-from .services import (
+from companies.services import (
     CompanyService, 
     DepartmentService, 
     BranchService, 
@@ -23,7 +25,9 @@ def is_search(data):
     search_keys = ['search', 'offset', 'limit', 'is_filter', 'ordering']
     return any(key in data for key in search_keys)
 
-# --- COMPANY VIEWS ---
+# --- COMPANY DETAIL VIEW ---
+
+# --- COMPANY LIST/CREATE VIEW ---
 
 class CompanyListCreateView(APIView):
     permission_classes = [IsAuthenticated] 
@@ -34,6 +38,7 @@ class CompanyListCreateView(APIView):
         return apply_filters_and_paginate(self, companies, CompanySerializer)
 
     def post(self, request):
+        # Helper to check for search/filter
         if is_search(request.data):
             companies = CompanyService.list_companies()
             return apply_filters_and_paginate(self, companies, CompanySerializer)
@@ -48,10 +53,70 @@ class CompanyListCreateView(APIView):
             "errors": None
         }, status=status.HTTP_201_CREATED)
 
+class CompanyDetailView(APIView):
+    permission_classes = [IsAuthenticated, IsCompanyAdmin]
+    authentication_classes = [JWTAuthentication]
+
+    def get(self, request, pk):
+        try:
+            company = CompanyService.get_company(pk)
+            return Response({
+                "success": True,
+                "message": "Company retrieved successfully",
+                "data": CompanySerializer(company).data,
+                "errors": None
+            })
+        except Exception:
+            return Response({
+                "success": False,
+                "message": "Company not found",
+                "data": None,
+                "errors": f"Company with ID {pk} does not exist."
+            }, status=status.HTTP_404_NOT_FOUND)
+
+    def put(self, request, pk):
+        try:
+            company = CompanyService.get_company(pk)
+            serializer = CompanySerializer(company, data=request.data, partial=True)
+            serializer.is_valid(raise_exception=True)
+            updated_company = CompanyService.update_company(pk, serializer.validated_data)
+            return Response({
+                "success": True,
+                "message": "Company updated successfully",
+                "data": CompanySerializer(updated_company).data,
+                "errors": None
+            })
+        except Exception as e:
+            return Response({
+                "success": False,
+                "message": "Update failed",
+                "data": None,
+                "errors": str(e)
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+    def delete(self, request, pk):
+        try:
+            company = CompanyService.get_company(pk) # Get it first
+            self.check_object_permissions(request, company) # Check it
+            CompanyService.delete_company(pk)
+            return Response({
+                "success": True,
+                "message": "Company deleted successfully",
+                "data": None,
+                "errors": None
+            }, status=status.HTTP_200_OK)
+        except Exception:
+            return Response({
+                "success": False,
+                "message": "Delete failed",
+                "data": None,
+                "errors": "Resource not found"
+            }, status=status.HTTP_404_NOT_FOUND)
+
 # --- DEPARTMENT VIEWS ---
 
 class DepartmentListCreateView(APIView):
-    permission_classes = [IsAuthenticated] 
+    permission_classes = [IsAuthenticated, BelongsToCompany]
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):

@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Attendance
+from attendance.models import Attendance
 
 class AttendanceSerializer(serializers.ModelSerializer):
     # This creates a custom field that combines the employee's first and last name

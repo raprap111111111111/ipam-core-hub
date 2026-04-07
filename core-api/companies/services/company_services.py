@@ -1,4 +1,4 @@
-from .models import Company, Department, Branch, Designation
+from companies.models import Company, Department, Branch, Designation
 
 class CompanyService:
     @staticmethod
@@ -8,6 +8,23 @@ class CompanyService:
     @staticmethod
     def create_company(data):
         return Company.objects.create(**data)
+
+    @staticmethod
+    def get_company(pk):
+        return Company.objects.get(pk=pk)
+
+    @staticmethod
+    def update_company(pk, data):
+        company = Company.objects.get(pk=pk)
+        for attr, value in data.items():
+            setattr(company, attr, value)
+        company.save()
+        return company
+
+    @staticmethod
+    def delete_company(pk):
+        company = Company.objects.get(pk=pk)
+        company.delete()
 
 class DepartmentService:
     @staticmethod

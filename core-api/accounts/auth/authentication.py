@@ -2,7 +2,7 @@ import hashlib
 from django.utils import timezone
 from rest_framework.authentication import BaseAuthentication
 from rest_framework.exceptions import AuthenticationFailed
-from .models import AccessToken
+from ..models import AccessToken
 
 
 class DatabaseTokenAuthentication(BaseAuthentication):
