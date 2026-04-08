@@ -157,7 +157,7 @@ AUTH_USER_MODEL = 'accounts.User'
 
 # --- ADD THIS BLOCK ---
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60), # Increased to 60 for easier debugging
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=1), # Increased to 60 for easier debugging
     'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
     'ROTATE_REFRESH_TOKENS': True,
     'BLACKLIST_AFTER_ROTATION': True,
