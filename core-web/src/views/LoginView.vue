@@ -160,7 +160,7 @@ export default {
    Change values here first.
    This is your "easy debugger / design controller".
    ========================================================= */
-:root {
+:global(:root) {
   /* Main colors */
   --color-primary: #3f6bff;
   --color-secondary: #66e7ff;
