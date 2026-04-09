@@ -457,7 +457,7 @@ export default {
   background: transparent;
   box-shadow: none;
   filter: none;
-  transform: none;
+  transform: scale(1.9);
   transform-origin: center center;
 }
 
@@ -517,7 +517,7 @@ export default {
   margin-bottom: 14px;
   border-radius: var(--input-radius);
   border: 1px solid var(--input-border);
-  background: var(--input-bg, rgba(7, 18, 58, 0.26));
+  background: var(--input-bg);
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
   transition: border-color 0.22s ease, transform 0.22s ease, background 0.22s ease;
 }
@@ -538,13 +538,12 @@ export default {
 .input-wrapper input {
   flex: 1;
   height: var(--input-height);
-  border: none !important;      /* Force remove borders */
-  outline: none !important;     /* Force remove outlines */
-  background: transparent !important; /* Force the white box to disappear */
-  color: var(--color-text-main) !important;
+  border: 0;
+  outline: none;
+  background: transparent;
+  color: var(--color-text-main);
   font-size: 1rem;
   padding-right: 14px;
-  box-shadow: none !important;  /* Remove any browser shadows */
 }
 
 .input-wrapper input::placeholder {
