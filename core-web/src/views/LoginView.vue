@@ -538,9 +538,10 @@ export default {
 .input-wrapper input {
   flex: 1;
   height: var(--input-height);
-  border: 0;
   outline: none;
-  background-color: transparent !important;
+  background-color: transparent !important; /* Force the white box to disappear */
+  border: none !important;
+  box-shadow: none !important;
   appearance: none;
   color: var(--color-text-main);
   font-size: 1rem;
