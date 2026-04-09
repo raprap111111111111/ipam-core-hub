@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'rest_framework_simplejwt.token_blacklist',
     'corsheaders',
@@ -39,12 +40,21 @@ INSTALLED_APPS = [
     'django_filters',
 
 
-
+    'cloudinary',
     'accounts',
     'companies',
     'employees',
     'attendance',
 ]
+
+# Cloudinary Configuration
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'du2ileegf',
+    'API_KEY': '686745339917791',
+    'API_SECRET': 'd6aL1EXDAVyB6l65JVeU_6IN-ic'
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -178,4 +188,7 @@ AUTHENTICATION_BACKENDS = [
     'accounts.auth.backends.EmailBackend',
     'django.contrib.auth.backends.ModelBackend',
 ]
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 

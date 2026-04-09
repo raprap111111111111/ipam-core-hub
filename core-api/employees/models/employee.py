@@ -49,7 +49,7 @@ class Employee(models.Model):
 # --- New Fields ---
     
     # Basic Info
-    profile_photo = models.ImageField(upload_to='employees/photos/', null=True, blank=True)
+    profile_photo = models.ImageField(upload_to='employees/photos/%Y/%m/', null=True, blank=True, validators=[validate_image_size, validate_is_image])
     date_of_birth = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=20, choices=[
         ('male', 'Male'),
