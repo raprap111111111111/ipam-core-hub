@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Removed the trailing slash from base URL for cleaner concatenation
-const API_URL = "http://127.0.0.1:8002/api";
+const API_URL = import.meta.env.VITE_API_URL || "https://ipam-core-api.onrender.com/api";
 
 export async function getDashboardSummary() {
   const token = localStorage.getItem("access_token");
