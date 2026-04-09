@@ -457,7 +457,7 @@ export default {
   background: transparent;
   box-shadow: none;
   filter: none;
-  transform: scale(1.9);
+  transform: none;
   transform-origin: center center;
 }
 
@@ -517,7 +517,7 @@ export default {
   margin-bottom: 14px;
   border-radius: var(--input-radius);
   border: 1px solid var(--input-border);
-  background: var(--input-bg);
+  background: var(--input-bg, rgba(7, 18, 58, 0.26));
   box-shadow: inset 0 1px 0 rgba(255,255,255,0.06);
   transition: border-color 0.22s ease, transform 0.22s ease, background 0.22s ease;
 }
@@ -540,7 +540,8 @@ export default {
   height: var(--input-height);
   border: 0;
   outline: none;
-  background: transparent;
+  background-color: transparent !important;
+  appearance: none;
   color: var(--color-text-main);
   font-size: 1rem;
   padding-right: 14px;
