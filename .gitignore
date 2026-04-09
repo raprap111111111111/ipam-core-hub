@@ -1,6 +1,21 @@
 core-api/venv/
 core-api/.env
 dashboard/node_modules/
-dashboard/.env
+core-web/.env.production
+core-web/.env.local
 .DS_Store
+db.sqlite3
+
+# Environments
+.env
+.env.local
+.env.*.local
+
+# Build outputs
+dist/
+staticfiles/
+
+# Python/Django specific
+__pycache__/
+*.py[cod]
 db.sqlite3
