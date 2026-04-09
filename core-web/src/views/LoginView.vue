@@ -160,7 +160,7 @@ export default {
    Change values here first.
    This is your "easy debugger / design controller".
    ========================================================= */
-:global(:root) {
+:root {
   /* Main colors */
   --color-primary: #3f6bff;
   --color-secondary: #66e7ff;
@@ -538,14 +538,13 @@ export default {
 .input-wrapper input {
   flex: 1;
   height: var(--input-height);
-  outline: none;
-  background-color: transparent !important; /* Force the white box to disappear */
-  border: none !important;
-  box-shadow: none !important;
-  appearance: none;
-  color: var(--color-text-main);
+  border: none !important;      /* Force remove borders */
+  outline: none !important;     /* Force remove outlines */
+  background: transparent !important; /* Force the white box to disappear */
+  color: var(--color-text-main) !important;
   font-size: 1rem;
   padding-right: 14px;
+  box-shadow: none !important;  /* Remove any browser shadows */
 }
 
 .input-wrapper input::placeholder {
