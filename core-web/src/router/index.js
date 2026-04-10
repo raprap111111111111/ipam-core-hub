@@ -1,36 +1,35 @@
-import { createRouter, createWebHistory } from "vue-router";
-import LoginView from "../views/LoginView.vue";
-import DashboardView from '../views/Dashboard/Dashboard.vue'
+import { createRouter, createWebHistory } from 'vue-router';
+import MainLayout from '../layouts/MainLayout.vue';
+import DashboardView from '../views/Dashboard/Dashboard.vue';
 
 const routes = [
   {
-    path: "/",
-    name: "login",
-    component: LoginView,
+    path: '/',
+    name: 'login',
+    component: () => import('../views/LoginView.vue')
   },
   {
-    path: "/dashboard",
-    name: "dashboard",
-    component: DashboardView,
-    meta: { requiresAuth: true },
-  },
+    path: '/dashboard',
+    component: MainLayout,
+    children: [
+      {
+        path: '', 
+        name: 'dashboard',
+        component: DashboardView
+      },
+      // COMMENT THIS OUT UNTIL YOU CREATE THE FILE
+      // {
+      //   path: '/employees',
+      //   name: 'employees',
+      //   component: () => import('../views/EmployeesView.vue')
+      // }
+    ]
+  }
 ];
 
 const router = createRouter({
   history: createWebHistory(),
-  routes,
-});
-
-router.beforeEach((to, from, next) => {
-  const token = localStorage.getItem("access_token");
-
-  if (to.meta.requiresAuth && !token) {
-    next("/");
-  } else if (to.path === "/" && token) {
-    next("/dashboard");
-  } else {
-    next();
-  }
+  routes
 });
 
 export default router;

@@ -58,8 +58,13 @@ export default {
     }
 
     try {
-      this.dashboard = await getDashboardSummary();
-      if (this.dashboard.permissions) {
+     const response = await getDashboardSummary();
+      
+      // Since your Django backend wraps everything in { "data": { ... } }, 
+      // and Axios also uses .data, we extract it like this:
+      this.dashboard = response.data; 
+
+      if (this.dashboard?.permissions) {
         localStorage.setItem("permissions", JSON.stringify(this.dashboard.permissions));
       }
     } catch (err) {
