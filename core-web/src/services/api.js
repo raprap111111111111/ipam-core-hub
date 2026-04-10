@@ -1,8 +1,11 @@
 import axios from "axios";
 import router from "../router";
 
-// 1. FIRST: Define the constant
+// Log this to your browser console so you can SEE the fix working
+console.log("Environment API URL:", import.meta.env.VITE_API_BASE_URL);
+
 const api = axios.create({
+  // Use the variable, but we'll ensure it's exactly what we expect
   baseURL: import.meta.env.VITE_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
