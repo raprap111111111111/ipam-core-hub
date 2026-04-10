@@ -1,20 +1,26 @@
 .dashboard-page {
-  --peach: #ffc8b3;
-  --pink: #efc6c6;
-  --rose-lavender: #e0c5d9;
-  --lavender: #d1c4ec;
-  --periwinkle: #c2c3ff;
-  --text-main: #2f2742;
-  --text-soft: #706688;
-  --white-soft: rgba(255, 255, 255, 0.58);
-  --white-strong: rgba(255, 255, 255, 0.82);
-  --border-soft: rgba(255, 255, 255, 0.44);
-  --shadow-soft: 0 18px 45px rgba(88, 64, 122, 0.08);
+  --black: #000000;
+  --deep-rose: #cf0f47;
+  --hot-pink: #ff0b55;
+  --soft-blush: #ffdddd;
+
+  --text-main: #ffffff;
+  --text-soft: rgba(255, 255, 255, 0.68);
+
+  --white-soft: rgba(255, 255, 255, 0.06);
+  --white-strong: rgba(255, 255, 255, 0.1);
+  --border-soft: rgba(255, 255, 255, 0.1);
+  --shadow-soft: 0 18px 45px rgba(0, 0, 0, 0.35);
+
+  --surface-soft: rgba(10, 10, 10, 0.72);
+  --surface-strong: rgba(18, 18, 18, 0.88);
+  --surface-glass: rgba(14, 14, 14, 0.72);
 
   min-height: 100vh;
   background:
-    radial-gradient(circle at top left, rgba(255, 255, 255, 0.34), transparent 26%),
-    linear-gradient(135deg, #ffc8b3 0%, #efc6c6 28%, #e0c5d9 58%, #d1c4ec 78%, #c2c3ff 100%);
+    radial-gradient(circle at top left, rgba(255, 11, 85, 0.16), transparent 22%),
+    radial-gradient(circle at bottom right, rgba(207, 15, 71, 0.18), transparent 26%),
+    linear-gradient(135deg, #000000 0%, #14040b 28%, #240610 58%, #3a0917 78%, #cf0f47 100%);
   padding: 22px;
   color: var(--text-main);
 }
@@ -23,7 +29,6 @@
   box-sizing: border-box;
 }
 
-/* 1. Ensure the layout handles the sidebar width correctly */
 .dashboard-layout {
   max-width: 1600px;
   margin: 0 auto;
@@ -34,12 +39,10 @@
   transition: all 0.3s ease;
 }
 
-/* 2. Fix the Sidebar collapse width */
 .dashboard-layout.collapsed {
   grid-template-columns: 88px minmax(0, 1fr);
 }
 
-/* 3. The Navbar spacing */
 .navbar {
   margin-bottom: 24px;
   width: 100%;
@@ -49,26 +52,25 @@
   gap: 20px;
   padding: 18px 22px;
   border-radius: 28px;
-  background: rgba(255, 255, 255, 0.34);
-  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: var(--surface-glass);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
-  box-shadow: 0 18px 45px rgba(88, 64, 122, 0.08);
+  box-shadow: var(--shadow-soft);
   position: relative;
   overflow: visible;
   z-index: 50;
 }
 
-
 .sidebar {
   background: linear-gradient(
     180deg,
-    rgba(255, 255, 255, 0.56),
-    rgba(255, 255, 255, 0.34)
+    rgba(12, 12, 12, 0.9),
+    rgba(20, 20, 20, 0.72)
   );
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 30px;
   backdrop-filter: blur(20px);
-  box-shadow: 0 18px 45px rgba(88, 64, 122, 0.08);
+  box-shadow: var(--shadow-soft);
   padding: 14px;
   position: sticky;
   top: 22px;
@@ -80,7 +82,7 @@
   align-items: center;
   margin-bottom: 18px;
   padding: 4px 48px 16px 4px;
-  border-bottom: 1px solid rgba(112, 102, 136, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sidebar-brand {
@@ -91,8 +93,8 @@
   width: 100%;
   padding: 10px 14px;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.45);
-  border: 1px solid rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .sidebar-logo {
@@ -107,6 +109,7 @@
   font-size: 18px;
   font-weight: 800;
   line-height: 1;
+  color: var(--text-main);
 }
 
 .sidebar-brand-text p {
@@ -122,9 +125,9 @@
   right: 8px;
   width: 34px;
   height: 34px;
-  border: 1px solid rgba(112, 102, 136, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 12px;
-  background: rgba(255, 255, 255, 0.78);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text-main);
   font-size: 15px;
   font-weight: 800;
@@ -145,7 +148,7 @@
   font-weight: 700;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: #9b8faa;
+  color: rgba(255, 255, 255, 0.38);
 }
 
 .sidebar-nav {
@@ -155,7 +158,7 @@
 
 .sidebar-link {
   border: 1px solid transparent;
-  background: rgba(255, 255, 255, 0.24);
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 18px;
   padding: 14px 16px;
   text-align: left;
@@ -171,27 +174,27 @@
 }
 
 .sidebar-link:hover {
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 11, 85, 0.1);
 }
 
 .sidebar-link.active {
-  background: rgba(196, 195, 255, 0.28);
-  border-color: rgba(155, 140, 255, 0.5);
-  box-shadow: inset 3px 0 0 #9b8cff;
+  background: rgba(255, 11, 85, 0.16);
+  border-color: rgba(255, 11, 85, 0.28);
+  box-shadow: inset 3px 0 0 var(--hot-pink);
 }
 
 .sidebar-icon {
   width: 22px;
   min-width: 22px;
   text-align: center;
-  color: #8d84a2;
+  color: rgba(255, 255, 255, 0.56);
   font-size: 15px;
 }
 
 .sidebar-divider {
   height: 1px;
   margin: 10px 16px;
-  background: rgba(112, 102, 136, 0.12);
+  background: rgba(255, 255, 255, 0.08);
 }
 
 .sidebar-label {
@@ -225,12 +228,12 @@
   position: relative;
 }
 
-
 .page-heading h2 {
   margin: 0;
   font-size: 20px;
   font-weight: 800;
   line-height: 1;
+  color: var(--text-main);
 }
 
 .page-heading p {
@@ -251,18 +254,18 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(20, 20, 20, 0.82);
   backdrop-filter: blur(16px);
-  box-shadow: 0 10px 24px rgba(70, 55, 110, 0.08);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.28);
   color: var(--text-main);
   cursor: pointer;
   transition: all 0.2s ease;
 }
 
 .user-pill:hover {
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(30, 30, 30, 0.92);
   transform: translateY(-1px);
 }
 
@@ -273,8 +276,8 @@
   display: grid;
   place-items: center;
   overflow: hidden;
-  background: linear-gradient(135deg, var(--lavender), var(--periwinkle));
-  color: var(--text-main);
+  background: linear-gradient(135deg, #cf0f47, #ff0b55);
+  color: #ffffff;
   font-weight: 800;
   flex-shrink: 0;
 }
@@ -298,6 +301,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  color: var(--text-main);
 }
 
 .chevron-icon {
@@ -317,10 +321,10 @@
   width: 220px;
   padding: 8px;
   border-radius: 16px;
-  background: rgba(255, 255, 255, 0.92);
-  border: 1px solid rgba(255, 255, 255, 0.6);
+  background: rgba(16, 16, 16, 0.96);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(20px);
-  box-shadow: 0 18px 35px rgba(70, 55, 110, 0.14);
+  box-shadow: 0 18px 35px rgba(0, 0, 0, 0.36);
   z-index: 9999;
 }
 
@@ -333,7 +337,7 @@
   border: none;
   border-radius: 12px;
   background: transparent;
-  color: var(--text-main);
+  color: #ffffff;
   font-size: 15px;
   font-weight: 600;
   text-align: left;
@@ -342,11 +346,11 @@
 }
 
 .dropdown-item:hover {
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 11, 85, 0.1);
 }
 
 .dropdown-item.primary {
-  background: rgba(255, 255, 255, 0.45);
+  background: rgba(255, 255, 255, 0.04);
   margin-bottom: 6px;
 }
 
@@ -366,7 +370,6 @@
   transform: translateY(-8px);
 }
 
-
 .content {
   margin-top: 16px;
 }
@@ -378,8 +381,8 @@
   gap: 20px;
   padding: 26px 24px;
   border-radius: 24px;
-  background: rgba(255, 255, 255, 0.58);
-  border: 1px solid var(--border-soft);
+  background: rgba(18, 18, 18, 0.74);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
   box-shadow: var(--shadow-soft);
 }
@@ -397,6 +400,7 @@
   margin: 0;
   font-size: 36px;
   line-height: 1.05;
+  color: var(--text-main);
 }
 
 .hero-subtext {
@@ -411,7 +415,8 @@
   gap: 10px;
   padding: 12px 16px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ffffff;
   font-weight: 700;
   white-space: nowrap;
 }
@@ -420,7 +425,7 @@
   width: 10px;
   height: 10px;
   border-radius: 999px;
-  background: #7ccf9f;
+  background: var(--hot-pink);
 }
 
 .stats-grid {
@@ -432,8 +437,8 @@
 
 .stat-card,
 .panel {
-  background: rgba(255, 255, 255, 0.58);
-  border: 1px solid var(--border-soft);
+  background: rgba(18, 18, 18, 0.76);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(16px);
   box-shadow: var(--shadow-soft);
 }
@@ -453,12 +458,14 @@
 .stat-label {
   font-size: 14px;
   font-weight: 700;
+  color: var(--text-main);
 }
 
 .stat-card h3 {
   margin: 0;
   font-size: 42px;
   line-height: 1;
+  color: var(--text-main);
 }
 
 .stat-card p {
@@ -490,19 +497,20 @@
   margin: 0;
   font-size: 18px;
   font-weight: 800;
+  color: var(--text-main);
 }
 
 .panel-tag {
   padding: 6px 10px;
   border-radius: 999px;
-  background: rgba(255, 255, 255, 0.72);
+  background: rgba(255, 255, 255, 0.06);
   color: var(--text-soft);
   font-size: 12px;
   font-weight: 700;
 }
 
 .calendar-box {
-  background: rgba(255, 255, 255, 0.46);
+  background: rgba(255, 255, 255, 0.04);
   border-radius: 18px;
   padding: 14px;
 }
@@ -537,12 +545,14 @@
 .calendar-date {
   padding: 6px 0;
   border-radius: 10px;
+  color: var(--text-main);
 }
 
 .calendar-date.active {
-  background: rgba(255, 255, 255, 0.92);
+  background: rgba(255, 11, 85, 0.16);
+  color: #ffffff;
   font-weight: 800;
-  box-shadow: 0 4px 12px rgba(70, 55, 110, 0.08);
+  box-shadow: 0 4px 12px rgba(207, 15, 71, 0.2);
 }
 
 .calendar-date.muted {
@@ -565,11 +575,12 @@
   border: none;
   border-radius: 14px;
   padding: 14px 16px;
-  background: rgba(255, 255, 255, 0.78);
-  color: var(--text-main);
+  background: linear-gradient(135deg, #cf0f47, #ff0b55);
+  color: #ffffff;
   font-weight: 700;
   cursor: pointer;
   text-align: left;
+  box-shadow: 0 10px 24px rgba(207, 15, 71, 0.3);
 }
 
 .activity-list {
@@ -588,13 +599,14 @@
   height: 12px;
   margin-top: 5px;
   border-radius: 999px;
-  background: #b992ff;
-  box-shadow: 0 0 0 4px rgba(185, 146, 255, 0.16);
+  background: #ff0b55;
+  box-shadow: 0 0 0 4px rgba(255, 11, 85, 0.14);
 }
 
 .activity-item strong {
   display: block;
   margin-bottom: 4px;
+  color: var(--text-main);
 }
 
 .activity-item p,
