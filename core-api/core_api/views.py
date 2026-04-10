@@ -1,9 +1,10 @@
+# views.py
+from django.db import connection
 from django.http import JsonResponse
-from django.views.decorators.http import require_GET
 
-@require_GET
 def ping(request):
-    return JsonResponse({
-        "status": "ok",
-        "message": "pong"
-    })
+    try:
+        connection.ensure_connection()
+        return JsonResponse({"status": "healthy", "message": "pong"}, status=200)
+    except Exception as e:
+        return JsonResponse({"status": "unhealthy", "message": str(e)}, status=503)
