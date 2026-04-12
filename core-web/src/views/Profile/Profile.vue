@@ -9,10 +9,10 @@
         <!-- Avatar + identity card -->
         <div class="card avatar-card">
           <div class="avatar-section">
-            <div class="avatar-ring" @click="triggerFileInput" title="Change photo">
+            <div class="avatar-ring" @click="triggerFileInput">
               <img
                 v-if="form.avatarPreview || user?.profile_photo"
-                :src="form.avatarPreview || user?.profile_photo"
+                :src="form.avatarPreview || formatImageUrl(user?.profile_photo)"
                 alt="Avatar"
                 class="avatar-img"
               />
@@ -33,7 +33,12 @@
 
           <div v-if="form.avatarFile" class="save-photo-row">
             <button class="btn btn-ghost btn-sm" @click="cancelPhotoChange">Cancel</button>
-            <button class="btn btn-primary btn-sm" :disabled="loading" @click="updateAvatarOnly">
+            <button 
+              class="btn btn-primary btn-sm" 
+              type="button" 
+              :disabled="loading" 
+              @click.stop="updateAvatarOnly"
+            >
               {{ loading ? 'Saving…' : 'Save photo' }}
             </button>
           </div>
@@ -171,6 +176,9 @@
 <script setup>
 import { useProfile } from './useProfile.js';
 
+// 1. Define the emit to talk to MainLayout
+const emit = defineEmits(['refresh-user']);
+
 const {
   user,
   form,
@@ -193,7 +201,8 @@ const {
   resetForm,
   showPasswordModal,
   handlePasswordChange,
-} = useProfile();
+  formatImageUrl
+} = useProfile({ emit });
 </script>
 
 <style scoped src="./Profile.css"></style>

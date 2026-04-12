@@ -96,7 +96,11 @@
         </header>
 
         <main class="content">
-          <router-view :user="user" :dashboardData="dashboardData" />
+          <router-view 
+            :user="user" 
+            :dashboardData="dashboardData" 
+            @refresh-user="fetchInitialData" 
+          />
         </main>
       </div>
     </div>
@@ -141,20 +145,30 @@ export default {
   },
   async mounted() {
     document.addEventListener("click", this.handleClickOutside);
-
-    try {
-      this.user = await getMe();
-      const res = await getDashboardSummary();
-      this.dashboardData = res.data;
-    } catch (err) {
-      localStorage.clear();
-      this.$router.push("/");
-    }
+    // Initialize data on mount
+    await this.fetchInitialData();
   },
   beforeUnmount() {
     document.removeEventListener("click", this.handleClickOutside);
   },
   methods: {
+    async fetchInitialData() {
+      try {
+        const [userRes, dashRes] = await Promise.all([
+          getMe(),
+          getDashboardSummary()
+        ]);
+        this.user = userRes;
+        this.dashboardData = dashRes.data;
+      } catch (err) {
+        console.error("Data fetch failed:", err);
+        // Redirect to login if unauthorized
+        if (err.response?.status === 401) {
+          localStorage.clear();
+          this.$router.push("/");
+        }
+      }
+    },
     toggleSidebar() {
       this.isSidebarCollapsed = !this.isSidebarCollapsed;
     },
@@ -162,11 +176,9 @@ export default {
       this.showUserMenu = !this.showUserMenu;
     },
     formatImageUrl(url) {
-    if (!url) return null;
-    // If the URL is already absolute (starts with http), return it
-    if (url.startsWith('http')) return url;
-    // Otherwise, prepend your backend base URL
-    return `http://127.0.0.1:8002${url}`;
+      if (!url) return null;
+      if (url.startsWith('http')) return url;
+      return `http://127.0.0.1:8002${url}`;
     },
     handleClickOutside(event) {
       if (
@@ -197,7 +209,7 @@ export default {
       try {
         await logoutUser();
       } catch (err) {
-        console.warn("Backend logout failed, clearing local session.");
+        console.warn("Logout failed, clearing local session.");
       } finally {
         localStorage.clear();
         this.$router.push("/");

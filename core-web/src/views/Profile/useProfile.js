@@ -3,7 +3,7 @@ import { ref, computed, onMounted } from 'vue';
 import { getMe, changeUserPassword } from '../../services/auth.js';
 import { updateProfile as updateProfileService } from '../../services/accounts.js';
 
-export function useProfile() {
+export function useProfile({ emit }) {
   const user = ref(null);
   const loading = ref(false);
   const showPasswordModal = ref(false);
@@ -100,11 +100,15 @@ export function useProfile() {
     form.value.avatarPreview = URL.createObjectURL(file);
   };
 
-  const updateProfile = async () => {
+const updateProfile = async () => {
     loading.value = true;
     try {
       await updateProfileService(form.value, form.value.avatarFile);
       await loadUserData();
+      
+      // TRIGGER FAST REFRESH FOR NAVBAR
+      if (emit) emit('refresh-user'); 
+      
       showToast('Profile updated!');
     } catch {
       showToast('Update failed', 'error');
@@ -123,12 +127,40 @@ export function useProfile() {
     editModal.value.visible = false;
   };
 
+  // Add this helper to match your dashboard logic
+  const formatImageUrl = (path) => {
+    if (!path) return null;
+    if (path.startsWith('http')) return path;
+    const baseURL = "http://127.0.0.1:8000"; // Ensure this matches your API
+    return `${baseURL}${path}`;
+  };
+
+  const updateAvatarOnly = async () => {
+      if (!form.value.avatarFile) return;
+      loading.value = true;
+      try {
+        await updateProfileService({}, form.value.avatarFile);
+        await loadUserData();
+        
+        // TRIGGER FAST REFRESH FOR NAVBAR
+        if (emit) emit('refresh-user'); 
+        
+        form.value.avatarFile = null; 
+        showToast('Photo updated!');
+      } catch (err) {
+        showToast('Failed to upload', 'error');
+      } finally {
+        loading.value = false;
+      }
+    };
+
   onMounted(loadUserData);
 
   return {
     user, form, passwordForm, loading, toast, userInitials, fullName, memberSince,
     passwordStrengthPercent, passwordStrengthColor, passwordStrengthLabel, passwordsMatch,
     fileInput, triggerFileInput, handleImageUpload, updateProfile, showPasswordModal,
-    editModal, openEditModal, saveAndClose
+    editModal, openEditModal, saveAndClose, formatImageUrl,
+    updateAvatarOnly,
   };
 }
