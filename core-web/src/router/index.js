@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import MainLayout from '../layouts/MainLayout.vue';
 import DashboardView from '../views/Dashboard/Dashboard.vue';
+import ProfileView from '../views/Profile/Profile.vue';
 
 const routes = [
   {
@@ -17,6 +18,12 @@ const routes = [
         name: 'dashboard',
         component: DashboardView
       },
+
+      {
+        path: '/profile', // Add a leading slash to make it top-level under the layout
+        name: 'profile',
+        component: ProfileView
+      }
       // COMMENT THIS OUT UNTIL YOU CREATE THE FILE
       // {
       //   path: '/employees',

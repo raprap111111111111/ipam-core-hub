@@ -56,7 +56,7 @@
               <div class="user-avatar">
                 <img
                   v-if="user?.profile_photo"
-                  :src="user.profile_photo"
+                  :src="formatImageUrl(user.profile_photo)"
                   alt="User Avatar"
                 />
                 <span v-else>{{ userInitials }}</span>
@@ -104,8 +104,8 @@
 </template>
 
 <script>
-import { getMe, logoutUser } from "../services/auth";
-import { getDashboardSummary } from "../services/dashboard";
+import { getMe, logoutUser } from '../services/auth.js';
+import { getDashboardSummary } from '../services/dashboard.js';
 import logoImg from "../assets/login/logo2.png";
 
 export default {
@@ -160,6 +160,13 @@ export default {
     },
     toggleUserMenu() {
       this.showUserMenu = !this.showUserMenu;
+    },
+    formatImageUrl(url) {
+    if (!url) return null;
+    // If the URL is already absolute (starts with http), return it
+    if (url.startsWith('http')) return url;
+    // Otherwise, prepend your backend base URL
+    return `http://127.0.0.1:8002${url}`;
     },
     handleClickOutside(event) {
       if (
