@@ -7,5 +7,6 @@ from .user_views import (
     ChangePasswordView,
     AssignRoleView,
     UserDetailView,
-    UserRegistrationView
+    UserRegistrationView,
+    ProfileUpdateView
 )

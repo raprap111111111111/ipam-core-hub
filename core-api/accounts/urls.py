@@ -3,7 +3,7 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from .views import (
     LoginView, LogoutView, ChangePasswordView, 
     MeView, AssignRoleView, RolePermissionView,
-    PermissionListView  # <--- Add this import (Make sure to create this view!)
+    PermissionListView, ProfileUpdateView # <--- Add this import (Make sure to create this view!)
 )
 
 urlpatterns = [
@@ -19,4 +19,6 @@ urlpatterns = [
     
     # 2. Use this to GET the big list of all system permissions (33, 34, 35...)
     path('permissions/', PermissionListView.as_view(), name='permissions-list'),
+
+    path('profile/update/', ProfileUpdateView.as_view(), name='profile-update'),
 ]

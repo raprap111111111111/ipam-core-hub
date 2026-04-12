@@ -5,6 +5,8 @@ from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.contrib.auth.models import Group, Permission
 from django.contrib.auth import get_user_model, authenticate
 from rest_framework_simplejwt.tokens import RefreshToken
+from accounts.serializers import ProfileUpdateSerializer
+from rest_framework.parsers import MultiPartParser, FormParser
 
 from ..permissions import IsAdminUser, IsAccountOwner
 
@@ -138,3 +140,30 @@ class UserRegistrationView(APIView):
     def post(self, request):
         # Your registration logic here
         return Response({"message": "User registered"}, status=status.HTTP_201_CREATED)
+
+
+class ProfileUpdateView(APIView):
+    permission_classes = [IsAuthenticated]
+    parser_classes = [MultiPartParser, FormParser] # Crucial for Postman/Vue files
+
+    def patch(self, request):
+        user = request.user
+        serializer = ProfileUpdateSerializer(user, data=request.data, partial=True)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        # MANUALLY save the photo to the Employee model
+        if 'profile_photo' in request.FILES:
+            employee = getattr(user, 'employee_profile', None) or getattr(user, 'employee', None)
+            if employee:
+                employee.profile_photo = request.FILES['profile_photo']
+                employee.save()
+        
+        # Return the updated user using the MeSerializer 
+        # (Pass context={'request': request} so the photo URL is absolute)
+        return Response(UserMeSerializer(user, context={'request': request}).data)
+        
+class MeView(APIView):
+    def get(self, request):
+        serializer = UserMeSerializer(request.user, context={'request': request})
+        return Response(serializer.data)

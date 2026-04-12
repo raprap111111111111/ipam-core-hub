@@ -48,14 +48,7 @@ INSTALLED_APPS = [
     'attendance',
 ]
 
-# Cloudinary Configuration
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': 'du2ileegf',
-    'API_KEY': '686745339917791',
-    'API_SECRET': 'd6aL1EXDAVyB6l65JVeU_6IN-ic'
-}
 
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -194,8 +187,25 @@ AUTHENTICATION_BACKENDS = [
     'django.contrib.auth.backends.ModelBackend',
 ]
 
+# --- Media Files Configuration ---
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# --- Storage Configuration Logic ---
+if DEBUG:
+    # Local Development: Use standard File System
+    DEFAULT_FILE_STORAGE = 'django.core.files.storage.FileSystemStorage'
+    # Use WhiteNoise for static files locally if you want, but default is fine
+    STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
+else:
+    # Cloudinary Configuration
+    CLOUDINARY_STORAGE = {
+        'CLOUD_NAME': 'du2ileegf',
+        'API_KEY': '686745339917791',
+        'API_SECRET': 'd6aL1EXDAVyB6l65JVeU_6IN-ic'
+    }
+
+    DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 # Static files configuration
 STATIC_URL = 'static/'

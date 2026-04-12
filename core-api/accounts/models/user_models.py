@@ -36,11 +36,11 @@ class User(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(unique=True)
 
-    first_name = models.CharField(max_length=150)
+    first_name = models.CharField(max_length=150, blank=True, null=True)
     middle_name = models.CharField(max_length=100, blank=True, null=True)
-    last_name = models.CharField(max_length=150)
+    last_name = models.CharField(max_length=150, blank=True, null=True)
 
-    avatar = models.URLField(blank=True, null=True)
+    avatar = models.ImageField(upload_to='avatars/', blank=True, null=True)
     phone_number = models.CharField(max_length=15, blank=True)
     is_hr_admin = models.BooleanField(default=False)
 

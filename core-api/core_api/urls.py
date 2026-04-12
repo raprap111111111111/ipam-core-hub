@@ -3,6 +3,10 @@ from django.urls import path, include
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from .views import ping
 
+# --- ADD THESE IMPORTS ---
+from django.conf import settings
+from django.conf.urls.static import static
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 
@@ -17,3 +21,8 @@ urlpatterns = [
     path('api/attendance/', include('attendance.urls')),
     path('api/dashboard/', include('dashboard.urls')), 
 ]
+
+# --- ADD THIS BLOCK ---
+# This serves media files (like avatars) locally during development
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

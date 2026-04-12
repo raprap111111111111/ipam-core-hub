@@ -44,14 +44,27 @@ class UserMeSerializer(serializers.ModelSerializer):
     account_id = serializers.ReadOnlyField(source='id')
     company_id = serializers.SerializerMethodField()
     employee_id = serializers.SerializerMethodField()
+    profile_photo = serializers.SerializerMethodField()
 
     class Meta:
         model = User
         fields = [
             'id', 'email', 'first_name', 'middle_name', 'last_name',
+            'phone_number', 'profile_photo',
             'account_id', 'company_id', 'employee_id', 
             'is_staff', 'is_superuser', 'roles', 'permissions'
         ]
+
+    
+    def get_profile_photo(self, obj):
+        employee = getattr(obj, 'employee_profile', None)
+        if employee and employee.profile_photo:
+            request = self.context.get('request')
+            # This will automatically turn /media/ into http://127.0.0.1:8002/media/
+            if request:
+                return request.build_absolute_uri(employee.profile_photo.url)
+            return employee.profile_photo.url
+        return None
 
     def get_company_id(self, obj):
         return getattr(getattr(obj, 'employee_profile', None), 'company_id', None)
@@ -66,3 +79,17 @@ class UserMeSerializer(serializers.ModelSerializer):
     def get_permissions(self, obj):
         if obj.is_superuser: return ["*"]
         return sorted(list(obj.get_all_permissions()))
+
+class ProfileUpdateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ['first_name', 'middle_name', 'last_name', 'phone_number']
+
+    def validate(self, data):
+        # Loop through the submitted data
+        for field in ['first_name', 'middle_name', 'last_name']:
+            if data.get(field) == "undefined":
+                # If it's the string "undefined", remove it from the update 
+                # so it keeps the old value in the database
+                data.pop(field)
+        return data
