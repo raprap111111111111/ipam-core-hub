@@ -33,7 +33,8 @@ class EmployeeListCreateView(APIView):
                 # If Maria isn't even listed as an employee, she sees nothing
                 employees = employees.none()
 
-        return apply_filters_and_paginate(self, employees, EmployeeSerializer)
+        search_fields = ['first_name', 'last_name', 'employee_id']
+        return apply_filters_and_paginate(self, employees, EmployeeSerializer, search_fields=search_fields)
 
     def post(self, request):
         """Handle POST requests (Create OR Search)"""
@@ -45,23 +46,27 @@ class EmployeeListCreateView(APIView):
 
             # Strict Multi-Company Filtering for Search
             if not request.user.is_superuser:
-                user_company_id = getattr(request.user, 'company_id', None)
-                if user_company_id:
-                    employees = employees.filter(company_id=user_company_id)
-                else:
+                # Note: Using getattr on request.user depends on your Auth setup.
+                # If company_id is on the Employee profile, use the logic from your GET method:
+                try:
+                    user_employee_record = Employee.objects.get(user=request.user)
+                    employees = employees.filter(company_id=user_employee_record.company_id)
+                except Employee.DoesNotExist:
                     employees = employees.none()
 
-            return apply_filters_and_paginate(self, employees, EmployeeSerializer)
+            search_fields = ['first_name', 'last_name', 'employee_id']
+            # RETURN HERE so the creation logic below doesn't run
+            return apply_filters_and_paginate(self, employees, EmployeeSerializer, search_fields=search_fields)
 
-        # Standard Creation Logic
-        serializer = EmployeeSerializer(data=request.data)
+        # Standard Creation Logic (This only runs if is_search_request is False)
+        serializer = EmployeeSerializer(data=request.data, context={'request': request})
         serializer.is_valid(raise_exception=True)
         employee = EmployeeService.create_employee(serializer.validated_data)
         
         return Response({
             "success": True,
             "message": "Employee created successfully",
-            "data": EmployeeSerializer(employee).data,
+            "data": EmployeeSerializer(employee, context={'request': request}).data,
             "errors": None
         }, status=status.HTTP_201_CREATED)
 
@@ -124,3 +129,55 @@ class EmployeeDetailView(APIView):
                 "data": EmployeeSerializer(updated_emp).data
             })
         return Response({"success": False, "errors": serializer.errors}, status=400)
+
+    def delete(self, request, pk):
+        """Handle individual employee deletion"""
+        employee = Employee.objects.filter(pk=pk).first()
+        
+        if not employee:
+            return Response({
+                "success": False, 
+                "message": "Employee not found"
+            }, status=status.HTTP_404_NOT_FOUND)
+
+        # Company Guard
+        if not request.user.is_superuser:
+            user_emp = Employee.objects.filter(user=request.user).first()
+            if not user_emp or employee.company_id != user_emp.company_id:
+                return Response({"success": False, "message": "Access Denied"}, status=403)
+
+        employee.delete()
+        return Response({
+            "success": True,
+            "message": "Employee deleted successfully"
+        }, status=status.HTTP_200_OK)
+
+class EmployeeBulkDeleteView(APIView):
+    permission_classes = [IsAuthenticated, CanManageEmployees]
+    authentication_classes = [JWTAuthentication]
+
+    def post(self, request):
+        ids = request.data.get('ids', [])
+        if not ids:
+            return Response({
+                "success": False,
+                "message": "No IDs provided"
+            }, status=status.HTTP_400_BAD_REQUEST)
+
+        queryset = Employee.objects.filter(id__in=ids)
+
+        # Security: Ensure user only deletes employees from their own company
+        if not request.user.is_superuser:
+            user_emp = Employee.objects.filter(user=request.user).first()
+            if user_emp:
+                queryset = queryset.filter(company_id=user_emp.company_id)
+            else:
+                return Response({"success": False, "message": "Access Denied"}, status=403)
+
+        count = queryset.count()
+        queryset.delete()
+
+        return Response({
+            "success": True,
+            "message": f"Successfully deleted {count} employees."
+        }, status=status.HTTP_200_OK)

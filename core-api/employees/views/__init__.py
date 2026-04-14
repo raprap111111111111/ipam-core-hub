@@ -1,3 +1,2 @@
-# employees/views/__init__.py
-
-from .employee_views import EmployeeListCreateView, EmployeeDetailView
+from .employee_views import EmployeeBulkDeleteView, EmployeeListCreateView, EmployeeDetailView # Adjust filename if different
+from .metadata_views import OrganizationMetadataView
