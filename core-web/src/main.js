@@ -8,6 +8,6 @@ import "vue-toastification/dist/index.css";
 const app = createApp(App);
 
 app.use(router);
-app.use(Toast); // This is the missing line!
+app.use(Toast);
 
 app.mount("#app");

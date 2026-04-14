@@ -7,8 +7,7 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      // Change index.mjs to index.js
-      'vue-toastification': 'vue-toastification/dist/index.js' 
+      'vue-toastification': 'vue-toastification/dist/index.mjs' 
     }
   }
 })
