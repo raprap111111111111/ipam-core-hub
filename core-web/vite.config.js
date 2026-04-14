@@ -7,8 +7,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
-      // ADD THIS LINE: It points Vite directly to the correct JavaScript file
-      'vue-toastification': 'vue-toastification/dist/index.mjs'
+      // Change index.mjs to index.js
+      'vue-toastification': 'vue-toastification/dist/index.js' 
     }
   }
 })
