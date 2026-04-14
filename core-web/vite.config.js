@@ -6,16 +6,8 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
+      // This is what makes the "@" work!
       '@': fileURLToPath(new URL('./src', import.meta.url))
     }
-  },
-  // ADD THIS SECTION BELOW TO FIX THE BUILD ERROR
-  optimizeDeps: {
-    include: ['vue-toastification'],
-  },
-  build: {
-    commonjsOptions: {
-      include: [/vue-toastification/, /node_modules/],
-    },
-  },
+  }
 })
