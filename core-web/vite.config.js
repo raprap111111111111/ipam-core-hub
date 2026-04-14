@@ -6,8 +6,9 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      // This is what makes the "@" work!
-      '@': fileURLToPath(new URL('./src', import.meta.url))
+      '@': fileURLToPath(new URL('./src', import.meta.url)),
+      // ADD THIS LINE: It points Vite directly to the correct JavaScript file
+      'vue-toastification': 'vue-toastification/dist/index.mjs'
     }
   }
 })
