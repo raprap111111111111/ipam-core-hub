@@ -23,6 +23,12 @@ const routes = [
         path: '/profile', // Add a leading slash to make it top-level under the layout
         name: 'profile',
         component: ProfileView
+      },
+
+      {
+        path: '/employees',
+        name: 'employees',
+        component: () => import('../views/Employees/EmployeesView.vue')
       }
       // COMMENT THIS OUT UNTIL YOU CREATE THE FILE
       // {

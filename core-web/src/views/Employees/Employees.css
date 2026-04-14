@@ -1,0 +1,604 @@
+.employees-container {
+  padding: 10px;
+  animation: fadeIn 0.5s ease;
+}
+
+.workforce-card {
+  background: rgba(18, 18, 18, 0.6);
+  backdrop-filter: blur(15px);
+  border: 1px solid rgba(255, 11, 85, 0.15);
+  border-radius: 24px;
+  padding: 24px;
+  box-shadow: 0 0 40px rgba(255, 11, 85, 0.05);
+}
+
+/* Header */
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.main-title {
+  font-size: 28px;
+  font-weight: 800;
+  color: #fff;
+  text-shadow: 0 0 15px rgba(255, 11, 85, 0.4);
+  margin: 0;
+}
+
+.sub-title {
+  color: rgba(255, 255, 255, 0.4);
+  font-size: 14px;
+}
+
+/* Buttons */
+.btn {
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+}
+
+.btn-primary {
+  background: #ff0b55;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #ff2a6d;
+  box-shadow: 0 0 15px rgba(255, 11, 85, 0.5);
+}
+
+.btn-secondary {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  margin-left: 10px;
+}
+
+/* Controls */
+.table-controls {
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  margin-bottom: 25px;
+  flex-wrap: wrap;
+}
+
+.search-wrapper {
+  position: relative;
+  flex: 1;
+  min-width: 300px;
+}
+
+.search-wrapper input {
+  width: 100%;
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px 12px 12px 40px;
+  border-radius: 14px;
+  color: white;
+}
+
+.search-icon {
+  position: absolute;
+  left: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0.5;
+}
+
+.filter-tabs {
+  display: flex;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 4px;
+  border-radius: 12px;
+}
+
+.tab-btn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.6);
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.tab-btn.active {
+  background: rgba(255, 11, 85, 0.15);
+  color: #ff0b55;
+}
+
+/* Table */
+.employee-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0 8px;
+}
+
+.employee-table th {
+  text-align: left;
+  padding: 12px;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.employee-table tr td {
+  background: rgba(255, 255, 255, 0.02);
+  padding: 16px 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.employee-table tr td:first-child {
+  border-left: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 16px 0 0 16px;
+}
+
+.employee-table tr td:last-child {
+  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 0 16px 16px 0;
+}
+
+
+.emp-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Badges */
+.status-badge {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: capitalize;
+}
+
+.status-badge.active {
+  background: rgba(255, 11, 85, 0.1);
+  color: #ff0b55;
+  border: 1px solid rgba(255, 11, 85, 0.2);
+}
+
+.status-badge.probationary {
+  background: rgba(255, 150, 0, 0.1);
+  color: #ff9600;
+}
+
+.verify-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: rgba(255, 255, 255, 0.7);
+}
+
+.check-icon {
+  background: #ff0b55;
+  color: white;
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 10px;
+  font-style: normal;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Pagination Styling */
+.pagination-footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.page-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 11, 85, 0.2);
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.page-btn:hover:not(:disabled) {
+  background: rgba(255, 11, 85, 0.2);
+  border-color: #ff0b55;
+}
+
+.page-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+  border-color: transparent;
+}
+
+.page-info {
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 14px;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Fix for the Bulk Actions Dropdown spacing */
+.header-actions {
+  display: flex;
+  gap: 12px;
+}
+
+/* --- [FIX: SEARCH BUTTON LAYOUT] --- */
+.search-wrapper {
+  display: flex;
+  gap: 8px;
+}
+
+.search-btn {
+  white-space: nowrap;
+  padding: 0 20px;
+}
+
+/* --- [FIX: BULK ACTIONS DROPDOWN] --- */
+.custom-dropdown-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  margin-top: 8px;
+  background: #1a1a1a;
+  border: 1px solid rgba(255, 11, 85, 0.3);
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  z-index: 100;
+  min-width: 160px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.custom-dropdown-menu button {
+  background: transparent;
+  color: white;
+  text-align: left;
+  padding: 10px 15px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.custom-dropdown-menu button:hover {
+  background: rgba(255, 11, 85, 0.1);
+  color: #ff0b55;
+}
+
+/* --- [FIX: MODAL OVERLAY] --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(5px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+.modal-content {
+  background: #121212;
+  border: 1px solid #ff0b55;
+  padding: 40px;
+  border-radius: 24px;
+  width: 100%;
+  max-width: 500px;
+  box-shadow: 0 0 50px rgba(255, 11, 85, 0.2);
+}
+
+.large-modal {
+  max-width: 800px;
+  width: 90%;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(255, 11, 85, 0.2);
+  padding-bottom: 10px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.6);
+  text-transform: uppercase;
+}
+
+.form-group input {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+/* Styling for auto-generated ID field */
+.readonly-input {
+  background: rgba(255, 255, 255, 0.02) !important;
+  color: #ff0b55 !important;
+  border: 1px dashed rgba(255, 11, 85, 0.3) !important;
+  cursor: not-allowed;
+  font-weight: bold;
+}
+
+/* Ensure the calendar picker is visible and styled */
+input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(1); /* Makes the calendar icon white for your dark theme */
+  cursor: pointer;
+}
+
+/* Close button hover state */
+.close-x:hover {
+  color: #ff0b55;
+  transform: scale(1.1);
+}
+
+/* --- [FIX: SELECT DROPDOWN STYLING] --- */
+.form-group select {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 12px;
+  border-radius: 8px;
+  color: white;
+  width: 100%;
+  cursor: pointer;
+  appearance: none; /* Removes default arrow */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='white' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: calc(100% - 12px) center;
+}
+
+.form-group select option {
+  background: #1a1a1a;
+  color: white;
+}
+
+.form-group select:focus {
+  outline: none;
+  border-color: #ff0b55;
+  box-shadow: 0 0 10px rgba(255, 11, 85, 0.2);
+}
+
+/* --- [FIX: MODAL HEADER & CLOSE BUTTON] --- */
+.modal-header h2 {
+  margin: 0;
+  font-size: 24px;
+  color: #fff;
+  font-weight: 700;
+}
+
+.close-x {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 32px;
+  line-height: 1;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  padding: 0;
+  display: flex;
+  align-items: center;
+}
+
+.close-x:hover {
+  color: #ff0b55;
+  transform: scale(1.1);
+}
+
+.emp-avatar-container {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+
+/* The initials fallback */
+.avatar-initials {
+  width: 40px !important;
+  height: 40px !important;
+  /* 1. DELETE THIS LINE ENTIRELY */
+  /* background: linear-gradient(135deg, #ff0b55, #ff4d88) !important; */
+  
+  background: transparent !important; 
+  color: white !important;
+  border-radius: 50% !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  
+  /* 2. CHANGE THIS TO A NEUTRAL COLOR OR REMOVE IT */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.2); 
+  
+  text-transform: uppercase;
+}
+
+/* Container for the avatar circle */
+.user-avatar {
+  /* 3. ENSURE NO BACKGROUND IS SET HERE */
+  background-color: transparent; 
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  position: relative;
+  
+  /* 4. REMOVE THE !important PINK GLOW */
+  box-shadow: none !important; 
+}
+
+.emp-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* The actual image inside the circle */
+.user-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Ensure the span (initials) are centered */
+.user-avatar span {
+  display: block;
+  line-height: 1;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* The initials text styling */
+.initials-text {
+  color: white !important;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
+  margin: 0;
+  padding: 0;
+  background: transparent !important; /* Force transparency */
+  display: inline-block;
+  pointer-events: none; /* Ensures it doesn't interfere with clicks */
+}
+
+/* Ensure the cell doesn't collapse */
+.employee-table td {
+  vertical-align: middle;
+}
+
+/* Optional: Add a subtle inner shadow to make the initials pop */
+.user-avatar span {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Employees.css or <style> block */
+.sortable-header {
+    cursor: pointer;
+    user-select: none;
+    transition: background-color 0.2s;
+}
+
+.sortable-header:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
+
+.sortable-header span {
+    margin-left: 5px;
+    font-size: 0.8rem;
+    color: #3b82f6; /* A nice blue for the arrow */
+}
+
+/* Table Action Buttons */
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.action-btn {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 6px 10px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.action-btn.edit:hover { background: #3498db; transform: translateY(-1px); }
+.action-btn.delete:hover { background: #ff4d4d; transform: translateY(-1px); }
+
+/* Confirmation Modal Styling */
+.confirm-modal {
+  max-width: 420px !important;
+  text-align: center;
+  padding: 30px !important;
+  border-radius: 16px;
+  background: #1a1a1a; /* Matches your dashboard background */
+  border: 1px solid rgba(255, 77, 77, 0.3);
+}
+
+.confirm-icon-wrapper {
+  font-size: 3.5rem;
+  margin-bottom: 15px;
+}
+
+.confirm-title {
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 1.5rem;
+}
+
+.warning-subtext {
+  color: #ff4d4d;
+  font-size: 0.85rem;
+  margin: 15px 0;
+  padding: 8px;
+  background: rgba(255, 77, 77, 0.1);
+  border-radius: 4px;
+}
+
+.btn-danger {
+  background: #ff4d4d;
+  color: white;
+  font-weight: 600;
+}
+
+.btn-danger:hover {
+  background: #e60000;
+  box-shadow: 0 4px 12px rgba(255, 77, 77, 0.4);
+}
