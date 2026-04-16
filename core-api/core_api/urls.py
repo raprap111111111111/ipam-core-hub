@@ -1,10 +1,21 @@
+import os
+from django.http import HttpResponse
 from django.contrib import admin
-from django.urls import path, include, re_path # Added re_path
-from django.views.generic import TemplateView   # Added TemplateView
+from django.urls import path, include, re_path 
+from django.views.generic import TemplateView  
 from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from .views import ping
 from django.conf import settings
 from django.conf.urls.static import static
+
+# A simple view to serve the index file
+def render_vue(request):
+    index_path = os.path.join(settings.BASE_DIR, 'dist', 'index.html')
+    try:
+        with open(index_path, 'r') as f:
+            return HttpResponse(f.read())
+    except FileNotFoundError:
+        return HttpResponse("Vue build not found. Did you run npm run build?", status=404)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -18,7 +29,7 @@ urlpatterns = [
     path('api/attendance/', include('attendance.urls')),
     path('api/dashboard/', include('dashboard.urls')), 
 
-    re_path(r'^.*$', TemplateView.as_view(template_name='index.html')),
+    re_path(r'^.*$', render_vue),
 ]
 
 if settings.DEBUG:
