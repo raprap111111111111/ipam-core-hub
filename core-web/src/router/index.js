@@ -20,7 +20,7 @@ const routes = [
       },
 
       {
-        path: 'profile', 
+        path: '/profile', // Add a leading slash to make it top-level under the layout
         name: 'profile',
         component: ProfileView
       },
