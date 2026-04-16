@@ -68,7 +68,7 @@ ROOT_URLCONF = 'core_api.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'dist')], 
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -207,9 +207,13 @@ else:
 
     DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
-# Static files configuration
 STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles') # Add this line!
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
-# This is needed to handle static files on Render
-STATICFILES_STORAGE = 'whitenoise.storage.StaticFilesStorage'
+# Use WhiteNoise to serve the Vue files and Django assets
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# This allows WhiteNoise to find your index.html and assets in the /dist folder
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'dist'),
+]
