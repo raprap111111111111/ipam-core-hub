@@ -217,3 +217,11 @@ STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'dist'),
 ]
+
+# settings.py
+
+# This tells WhiteNoise to search your dist folder for index.html
+WHITENOISE_INDEX_FILE = True
+
+# This handles the "Not Found" refresh error by serving index.html as a fallback
+WHITENOISE_ROOT = os.path.join(BASE_DIR, 'dist')
