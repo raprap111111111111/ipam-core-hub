@@ -29,7 +29,14 @@ const routes = [
         path: '/employees',
         name: 'employees',
         component: () => import('../views/Employees/EmployeesView.vue')
+      },
+
+      {
+        path: '/companies',
+        name: 'companies',
+        component: () => import('../views/Companies/CompaniesView.vue')
       }
+      
       // COMMENT THIS OUT UNTIL YOU CREATE THE FILE
       // {
       //   path: '/employees',
