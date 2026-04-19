@@ -6,6 +6,15 @@ class Company(models.Model):
     address = models.TextField(blank=True)
     website = models.URLField(blank=True)
     code = models.CharField(max_length=50, unique=True, blank=True, null=True)
+
+    # ✅ NEW: Company Logo
+    logo = models.ImageField(
+        upload_to='company_logos/', 
+        blank=True, 
+        null=True,
+        help_text="Company logo image"
+    )
+    
     is_active = models.BooleanField(default=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

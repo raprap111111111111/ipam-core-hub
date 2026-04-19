@@ -3,6 +3,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework_simplejwt.authentication import JWTAuthentication
+from rest_framework.parsers import MultiPartParser, FormParser, JSONParser
 
 from ..permissions import IsCompanyAdmin, BelongsToCompany
 
@@ -34,28 +35,41 @@ class CompanyListCreateView(APIView):
     authentication_classes = [JWTAuthentication]
 
     def get(self, request):
-        companies = CompanyService.list_companies()
-        return apply_filters_and_paginate(self, companies, CompanySerializer)
+            companies = CompanyService.list_companies()
+            # Add search_fields here ↓↓↓
+            return apply_filters_and_paginate(
+                self, 
+                companies, 
+                CompanySerializer, 
+                search_fields=['name', 'registration_number', 'code', 'address']  # ← ADD THIS
+            )
 
     def post(self, request):
-        # Helper to check for search/filter
-        if is_search(request.data):
-            companies = CompanyService.list_companies()
-            return apply_filters_and_paginate(self, companies, CompanySerializer)
+            # Helper to check for search/filter
+            if is_search(request.data):
+                companies = CompanyService.list_companies()
+                # Add search_fields here too ↓↓↓
+                return apply_filters_and_paginate(
+                    self, 
+                    companies, 
+                    CompanySerializer, 
+                    search_fields=['name', 'registration_number', 'code', 'address']  # ← ADD THIS
+                )
 
-        serializer = CompanySerializer(data=request.data)
-        serializer.is_valid(raise_exception=True)
-        company = CompanyService.create_company(serializer.validated_data)
-        return Response({
-            "success": True,
-            "message": "Company created successfully",
-            "data": CompanySerializer(company).data,
-            "errors": None
-        }, status=status.HTTP_201_CREATED)
-
+            serializer = CompanySerializer(data=request.data)
+            serializer.is_valid(raise_exception=True)
+            company = CompanyService.create_company(serializer.validated_data)
+            return Response({
+                "success": True,
+                "message": "Company created successfully",
+                "data": CompanySerializer(company).data,
+                "errors": None
+            }, status=status.HTTP_201_CREATED)
+            
 class CompanyDetailView(APIView):
     permission_classes = [IsAuthenticated, IsCompanyAdmin]
     authentication_classes = [JWTAuthentication]
+    parser_classes = [MultiPartParser, FormParser, JSONParser]
 
     def get(self, request, pk):
         try:
@@ -74,9 +88,17 @@ class CompanyDetailView(APIView):
                 "errors": f"Company with ID {pk} does not exist."
             }, status=status.HTTP_404_NOT_FOUND)
 
+    def post(self, request, pk):
+        # This allows POST to act as PUT for file compatibility
+        return self.put(request, pk)
+
+    def patch(self, request, pk):
+        return self.put(request, pk)
+
     def put(self, request, pk):
         try:
             company = CompanyService.get_company(pk)
+            # partial=True is what allows PATCH to work
             serializer = CompanySerializer(company, data=request.data, partial=True)
             serializer.is_valid(raise_exception=True)
             updated_company = CompanyService.update_company(pk, serializer.validated_data)
