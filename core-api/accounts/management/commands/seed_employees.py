@@ -47,7 +47,7 @@ class Command(BaseCommand):
 
         # 4. YOUR EXACT EMPLOYEE LIST
         employee_list = [
-            {"email": "ralph@corehub.com", "first": "Ralph", "middle": "D.", "last": "Admin", "role": superadmin_role, "is_staff": True, "is_superuser": True, "comp_idx": 0},
+            {"email": "bariogahot@gmail.com", "first": "Ralph", "middle": "D.", "last": "Admin", "role": superadmin_role, "is_staff": True, "is_superuser": True, "comp_idx": 0},
             {"email": "maria@corehub.com", "first": "Maria", "middle": "S.", "last": "Santos", "role": manager_role, "is_staff": False, "is_superuser": False, "comp_idx": 0},
             {"email": "juan@tpi.com", "first": "Juan", "middle": "P.", "last": "Dela Cruz", "role": employee_role, "is_staff": False, "is_superuser": False, "comp_idx": 1},
             {"email": "elena@tpi.com", "first": "Elena", "middle": "M.", "last": "Gomez", "role": employee_role, "is_staff": False, "is_superuser": False, "comp_idx": 1},
