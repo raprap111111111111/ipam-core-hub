@@ -211,7 +211,7 @@ STATIC_URL = 'static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Use WhiteNoise to serve the Vue files and Django assets
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # This allows WhiteNoise to find your index.html and assets in the /dist folder
 DIST_DIR = os.path.join(BASE_DIR, 'dist')
