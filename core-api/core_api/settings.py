@@ -60,7 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'core_api.middleware.InstantLogoutMiddleware',
+    # 'core_api.middleware.InstantLogoutMiddleware',
 ]
 
 ROOT_URLCONF = 'core_api.urls'
