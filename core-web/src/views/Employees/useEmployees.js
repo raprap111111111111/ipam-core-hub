@@ -227,7 +227,7 @@ const executeDelete = async () => {
     isDeleteModalOpen,
     itemToDelete, 
     confirmDelete, 
-    confirmBulkDelete, // <--- MUST BE HERE
+    confirmBulkDelete, 
     executeDelete
   };
 }
