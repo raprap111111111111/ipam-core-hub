@@ -225,3 +225,33 @@ WHITENOISE_INDEX_FILE = True
 
 # This handles the "Not Found" refresh error by serving index.html as a fallback
 WHITENOISE_ROOT = os.path.join(BASE_DIR, 'dist')
+
+# Add this near the bottom of settings.py
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'verbose': {
+            'format': '{levelname} {asctime} {module} {message}',
+            'style': '{',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'verbose',
+        },
+    },
+    'root': {
+        'handlers': ['console'],
+        'level': 'INFO',
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
+    },
+}
